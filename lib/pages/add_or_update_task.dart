@@ -15,6 +15,7 @@ class _AddOrUpdateTaskState extends State<AddOrUpdateTask> {
   String name = '';
   String imageUrl = '';
   bool isLoading = false;
+
   @override
   void initState() {
     if (widget.task != null) {
@@ -28,7 +29,7 @@ class _AddOrUpdateTaskState extends State<AddOrUpdateTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${widget.task != null ? 'Update' : 'Add'} Task"),
+        title: Text("${widget.task != null ? 'Update' : 'Add'} Data"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -53,9 +54,17 @@ class _AddOrUpdateTaskState extends State<AddOrUpdateTask> {
                 imageUrl = val;
               },
             ),
-            const SizedBox(height: 10),
-            TextButton(
-                onPressed: isLoading
+            const SizedBox(height: 20),
+            Container(
+              margin: const EdgeInsets.all(20),
+              alignment: Alignment.center,
+              height: 40,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.deepPurple),
+              child: InkWell(
+                onTap: isLoading
                     ? null
                     : () async {
                         if (name.isNotEmpty && imageUrl.isNotEmpty) {
@@ -77,7 +86,15 @@ class _AddOrUpdateTaskState extends State<AddOrUpdateTask> {
                       },
                 child: isLoading
                     ? const CircularProgressIndicator()
-                    : Text("${widget.task != null ? 'Update' : 'Add'} "))
+                    : Text(
+                        "${widget.task != null ? 'Update' : 'Add'} ",
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+              ),
+            )
           ],
         ),
       ),

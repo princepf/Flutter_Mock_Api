@@ -25,7 +25,8 @@ class _TaskListState extends State<TaskList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Task List"),
+        centerTitle: true,
+        title: const Text("Person Name"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -54,31 +55,46 @@ class _TaskListState extends State<TaskList> {
                           child: const Icon(Icons.delete),
                           color: Colors.red,
                         ),
-                        child: ListTile(
-                          onTap: () async {
-                            var res = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddOrUpdateTask(
-                                          task: tasks[index],
-                                        )));
-                            if (res != null) {
-                              getData();
-                            }
-                          },
-                          leading: Container(
-                            width: 70,
-                            height: 70,
-                            margin: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage('${tasks[index].avatar}'),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Colors.grey,
+                                  blurRadius: 5,
+                                  offset: Offset(1, 2),
+                                  spreadRadius: 0)
+                            ],
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: ListTile(
+                            onTap: () async {
+                              var res = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AddOrUpdateTask(
+                                            task: tasks[index],
+                                          )));
+                              if (res != null) {
+                                getData();
+                              }
+                            },
+                            leading: Container(
+                              width: 70,
+                              height: 70,
+                              margin: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage('${tasks[index].avatar}'),
+                                ),
                               ),
                             ),
+                            title: Text('${tasks[index].name}'),
                           ),
-                          title: Text('${tasks[index].name}'),
                         ),
                       )),
     );
