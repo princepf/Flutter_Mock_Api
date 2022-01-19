@@ -62,11 +62,16 @@ class _TaskListState extends State<TaskList> {
                             boxShadow: const [
                               BoxShadow(
                                   color: Colors.grey,
-                                  blurRadius: 5,
-                                  offset: Offset(1, 2),
-                                  spreadRadius: 0)
+                                  blurRadius: 15,
+                                  offset: Offset(4, 4),
+                                  spreadRadius: 1),
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 15,
+                                  offset: Offset(-4, -4),
+                                  spreadRadius: 1)
                             ],
-                            color: Colors.white,
+                            color: Colors.grey[200],
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: ListTile(
