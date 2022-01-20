@@ -60,13 +60,13 @@ class _AddOrUpdateTaskState extends State<AddOrUpdateTask> {
             ),
             const SizedBox(height: 20),
             Container(
+              height: 50,
+              width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(
                       color: Colors.deepPurple.withOpacity(0.7), width: 1.5)),
-              height: 50,
-              width: double.infinity,
               child: TextFormField(
                 initialValue: imageUrl,
                 decoration: const InputDecoration(
@@ -82,51 +82,53 @@ class _AddOrUpdateTaskState extends State<AddOrUpdateTask> {
               ),
             ),
             const SizedBox(height: 20),
-            Container(
-              margin: const EdgeInsets.all(20),
-              alignment: Alignment.center,
-              height: 40,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.deepPurple,
-                boxShadow: const [
-                  BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 15,
-                      offset: Offset(4, 4),
-                      spreadRadius: 1),
-                  BoxShadow(
-                      color: Colors.white12,
-                      blurRadius: 15,
-                      offset: Offset(-4, -4),
-                      spreadRadius: 1)
-                ],
-              ),
-              child: InkWell(
-                onTap: isLoading
-                    ? null
-                    : () async {
-                        if (name.isNotEmpty && imageUrl.isNotEmpty) {
-                          setState(() => isLoading = true);
-                          var res;
-                          if (widget.task == null) {
-                            res = await TaskApi.addTask(
-                                name: name, url: imageUrl);
-                            print(res.body);
-                          } else {
-                            res = await TaskApi.updateTask(
-                                name: name, url: imageUrl, id: widget.task!.id);
-                          }
-                          print(res.statusCode);
-                          setState(() => isLoading = false);
-                          if (res.statusCode == 200 || res.statusCode == 201) {
-                            Navigator.pop(context, true);
-                          }
+            InkWell(
+              onTap: isLoading
+                  ? null
+                  : () async {
+                      if (name.isNotEmpty && imageUrl.isNotEmpty) {
+                        setState(() => isLoading = true);
+                        var res;
+                        if (widget.task == null) {
+                          res =
+                              await TaskApi.addTask(name: name, url: imageUrl);
+                          print(res.body);
+                        } else {
+                          res = await TaskApi.updateTask(
+                              name: name, url: imageUrl, id: widget.task!.id);
                         }
-                      },
+                        print(res.statusCode);
+                        setState(() => isLoading = false);
+                        if (res.statusCode == 200 || res.statusCode == 201) {
+                          Navigator.pop(context, true);
+                        }
+                      }
+                    },
+              child: Container(
+                margin: const EdgeInsets.all(0),
+                alignment: Alignment.center,
+                height: 40,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.deepPurple,
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 15,
+                        offset: Offset(4, 4),
+                        spreadRadius: 1),
+                    BoxShadow(
+                        color: Colors.white12,
+                        blurRadius: 15,
+                        offset: Offset(-4, -4),
+                        spreadRadius: 1)
+                  ],
+                ),
                 child: isLoading
-                    ? const CircularProgressIndicator()
+                    ? const CircularProgressIndicator(
+                        color: Colors.white,
+                      )
                     : Text(
                         "${widget.task != null ? 'Update' : 'Add'} ",
                         style: const TextStyle(
